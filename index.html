@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>A7X Asia Tour 2026 • Setlist & Lyrics</title>
+<meta name="theme-color" content="#09090b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="A7X Lyrics">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
+<style>
+:root {
+  --bg: #09090b;
+  --surface: #141417;
+  --surface-hover: #1c1c21;
+  --border: #27272a;
+  --text-primary: #f4f4f5;
+  --text-muted: #71717a;
+  --text-dimmed: rgba(244, 244, 245, 0.3);
+  --accent: #e4e4e7;
+  --danger: #ef4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* View Switcher */
+.view {
+  display: none;
+  min-height: 100vh;
+}
+.view.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- HOMESCREEN --- */
+.home-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(9, 9, 11, 0.88);
+  backdrop-filter: blur(16px);
+  padding: env(safe-area-inset-top, 16px) 20px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.home-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+.home-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.home-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.btn-install {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+}
+.btn-install:active {
+  transform: scale(0.95);
+}
+.search-input-wrap {
+  position: relative;
+}
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px 12px 40px;
+  color: #fff;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus {
+  border-color: #52525b;
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  stroke: var(--text-muted);
+}
+
+.song-list-container {
+  padding: 12px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.song-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.song-card:active {
+  background: var(--surface-hover);
+  border-color: #3f3f46;
+}
+.song-num {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  width: 24px;
+  text-align: center;
+}
+.song-meta-wrap {
+  flex: 1;
+  min-width: 0;
+}
+.song-card-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.song-card-album {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.chevron-right {
+  width: 16px;
+  height: 16px;
+  stroke: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* --- PLAYER / LYRICS VIEW --- */
+.lyrics-view {
+  background: #09090b;
+  position: relative;
+}
+.player-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(9, 9, 11, 0.92);
+  backdrop-filter: blur(20px);
+  padding: env(safe-area-inset-top, 14px) 16px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btn-back {
+  background: none;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.btn-back:active {
+  background: var(--surface);
+}
+.header-track-info {
+  text-align: center;
+  max-width: 60%;
+}
+.header-track-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-track-album {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.header-right-space {
+  width: 64px;
+}
+
+/* Spotify-style Lyrics Viewport */
+.lyrics-viewport {
+  flex: 1;
+  padding: 40px 24px 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.lyric-line {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-dimmed);
+  transition: color 0.25s ease, font-size 0.25s ease, transform 0.25s ease;
+  cursor: pointer;
+}
+.lyric-line.active {
+  color: #ffffff;
+  font-size: 1.65rem;
+  transform: scale(1.02);
+  transform-origin: left center;
+}
+.lyric-line.inst {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Bottom Player Controls */
+.player-dock {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  background: rgba(14, 14, 17, 0.94);
+  backdrop-filter: blur(24px);
+  border-top: 1px solid var(--border);
+  padding: 12px 24px calc(12px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dock-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.btn-round {
+  background: #ffffff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+}
+.btn-round:active {
+  transform: scale(0.92);
+}
+.btn-step {
+  background: none;
+  border: none;
+  color: #a1a1aa;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+}
+.btn-step:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+.btn-speed {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: #d4d4d8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- VIEW 1: HOMESCREEN -->
+<div class="view active" id="viewHome">
+  <div class="home-header">
+    <div class="home-title-bar">
+      <div>
+        <h1 class="home-title">Avenged Sevenfold</h1>
+        <p class="home-subtitle">Asia Tour 2026 Setlist</p>
+      </div>
+      <button class="btn-install" id="btnInstallApp" onclick="promptInstall()" style="display:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Install App
+      </button>
+    </div>
+    <div class="search-input-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" class="search-input" id="homeSearch" placeholder="Cari judul lagu atau album..." oninput="filterHome()">
+    </div>
+  </div>
+
+  <div class="song-list-container" id="homeList">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- VIEW 2: LYRICS PLAYER -->
+<div class="view lyrics-view" id="viewLyrics">
+  <div class="player-header">
+    <button class="btn-back" onclick="goToHome()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Back
+    </button>
+    <div class="header-track-info">
+      <div class="header-track-title" id="playerTitle">-</div>
+      <div class="header-track-album" id="playerAlbum">-</div>
+    </div>
+    <div class="header-right-space"></div>
+  </div>
+
+  <div class="lyrics-viewport" id="playerViewport">
+    <!-- Lines rendered dynamically -->
+  </div>
+
+  <div class="player-dock">
+    <div class="dock-nav">
+      <button class="btn-step" id="btnPrev" onclick="prevTrack()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="3"/></svg>
+      </button>
+      <button class="btn-round" id="btnPlay" onclick="togglePlay()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="playIcon"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+      </button>
+      <button class="btn-step" id="btnNext" onclick="nextTrack()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="3"/></svg>
+      </button>
+    </div>
+    <button class="btn-speed" id="btnSpeed" onclick="cycleSpeed()">Speed: 3.5s</button>
+  </div>
+</div>
+
+<script>
+const SETLIST_2026 = [{"id": 1, "title": "Nightmare", "album": "Nightmare (2010)", "lines": ["[Intro: Bell toll & eerie melody]", "NIGHTMARE!", "(Now your nightmare comes to life)", "Dragged ya down below, down to the devil's show", "To be his guest forever (peace of mind is less than never)", "Hate to twist your mind, but God ain't on your side", "An oath you swore to him will never hold!", "'Cause you've been taken for granted, down together", "Your judgment day is here!", "Nightmare! (Now your nightmare comes to life)", "Now it's your nightmare! (Now your nightmare comes to life)", "You should have known the price of evil", "And it hurts to know that you belong here, yeah", "Ooh, it's your fuckin' nightmare!", "Fight! (Fight!) Not to fail! (Fail!)", "Not to fall! (Fall!)", "Or you'll end up like the rest!", "Die! (Die!) Buried tight! (Tight!)", "In the night! (Night!)", "Can't you tell it's getting cold?", "[Guitar Solo - Synyster Gates]", "IT'S YOUR FUCKIN' NIGHTMARE!"]}, {"id": 2, "title": "Shepherd of Fire", "album": "Hail to the King (2013)", "lines": ["[Intro: Bell, thunder & heavy riff]", "Let's take a moment and break the ice", "So my intentions are known", "See, I have pity in shapes and sizes", "For you in every state", "I heard a rumor you need a savior", "Someone to carry you through", "Well, let me tell you about a legend", "Who's come to grant your wish", "Know me by name, shepherd of fire!", "Well, I can promise you paradise", "No need to serve on your knees", "And when you're lost in the darkest hour", "I'll be the one you appease", "I am the liar, I am the snake", "I am the pride you desire", "Know me by name, shepherd of fire!", "[Guitar Solo]", "SHEPHERD OF FIRE!"]}, {"id": 3, "title": "Afterlife", "album": "Avenged Sevenfold (2007)", "lines": ["[Intro: Orchestral strings & heavy groove]", "Like walking into a dream, so unlike what you've seen", "So unsure but it seems, 'cause we've been waiting for you", "Fallen into this place, just giving you a small taste", "Of your afterlife here so stay, you'll be back here soon anyway", "I see a distant light, but girl, this can't be right", "Such a surreal place to see so early in my life", "Don't want to die, but that's what took me to this place", "I need another chance to hold, to feel your face", "I've got too much to say, not now, don't let me go", "UN-BREAK ME, UN-CRY MY TEARS!", "Loved ones back home, all crying 'cause they're already missing me", "I pray by the grace of God that there's somebody listening", "Give me a chance to hold her, let me take back my time", "I need to tell her that I love her and that everything's fine!", "I see a distant light, but girl, this can't be right", "Such a surreal place to see so early in my life", "Don't want to die, but that's what took me to this place", "I need another chance to hold, to feel your face", "[Synyster Gates Dual Harmony Solo]", "I see a distant light, but girl, this can't be right", "Such a surreal place to see so early in my life", "Don't want to die, but that's what took me to this place", "I need another chance to hold, to feel your face", "UN-BREAK ME, UN-CRY MY TEARS!"]}, {"id": 4, "title": "Buried Alive", "album": "Nightmare (2010)", "lines": ["[Clean arpeggio intro]", "Take the time with a wounded hand", "'Cause it's like flowers in the wind", "Like a ghost in the trees, a cold whisper in the freeze", "Can you hear what they said?", "While they bury the dead", "Take the time with a wounded hand", "Blind side of the mind, what a wicked design", "Holding on to a prayer, someone tell me I'm there", "BURIED ALIVE!", "[Heavy thrash metal shift]", "Shame on you, shame on me", "This was never meant to be", "Living in a cage of agony", "Watching through the bars as the world decays", "DIE, DIE, BURIED ALIVE!", "Now you're in the grave, ain't no one gonna save", "THIS IS YOUR FINAL REST!"]}, {"id": 5, "title": "Seize the Day", "album": "City of Evil (2005)", "lines": ["[Piano & acoustic guitar opening]", "Seize the day or die regretting the time you lost", "It's empty and cold without you here, too many people to ache over", "I see my vision burn, I feel my memories fade with time", "But I'm too young to worry", "A melody, a memory, or just one picture", "Seize the day or die regretting the time you lost", "It's empty and cold without you here, too many people to ache over", "Trials in life, questions of us existing here", "Don't save until I die, a prayer for you I whisper", "Touch my hand, tell me you love me once again", "SO TEARFUL SO BLUE!", "Seize the day or die regretting the time you lost", "It's empty and cold without you here, too many people to ache over", "[Synyster Gates Iconic Outro Solo]", "Silence you lost me, no chance for one more day..."]}, {"id": 6, "title": "Hail to the King", "album": "Hail to the King (2013)", "lines": ["[Thunder & opening riff]", "Watch your tongue or have it cut from your head", "Save your life by keeping whispers unsaid", "Children roam the streets now looking for bread", "Waiting for the conqueror to wipe away the dead", "Blood is spilt and horses shake at the reins", "Redistribute all the gold in your veins", "Bury all your dead, then pray for the rain", "Witness the beginning of eternity in pain!", "HAIL! HAIL! HAIL!", "Hail to the King!", "Hail to the one, kneel to the crown", "Stand in the sun, hail to the king!", "HAIL! HAIL! HAIL!", "The King!", "Blood is spilt and horses shake at the reins", "Redistribute all the gold in your veins", "Bury all your dead, then pray for the rain", "Witness the beginning of eternity in pain!", "Hail to the King!", "Hail to the one, kneel to the crown", "Stand in the sun, hail to the king!", "[Synyster Gates Solo]", "HAIL TO THE KING!"]}, {"id": 7, "title": "The Stage", "album": "The Stage (2016)", "lines": ["[Drum roll & progressive rock intro]", "So intelligence created an answer to humanity's question", "Tell me a lie in a whisper, tell me that the world is mine", "Who is the crowd that peers through the cage?", "As we perform here upon the stage", "Tell me a lie in a whisper, tell me that it's all alright", "Tell me again that we're doing fine", "Hope smiles from the threshold of the year to come", "Whispering that it will be happier...", "Jesus Christ, was he who he said he was?", "Or just another puppet in the play?", "STAND UP AND TAKE THE STAGE!", "Look at the lights blinding your eyes", "Can't you see through the disguise?", "We are the actors on the stage tonight!"]}, {"id": 8, "title": "Nobody", "album": "Life Is But a Dream… (2023)", "lines": ["[Distorted electronic pulse]", "Ride the beam of light into the center of the night", "Dissolve the body, shatter the ego, lose the sight", "A thousand eyes upon me, watching everything I do", "There is no me, there is no you", "I walk through the door and I see the empty room", "From the cradle to the casket, from the womb to the tomb", "I'M NOBODY! NOBODY!", "I am the all, I am the none", "I am the shadow, I am the sun", "Breathe in the smoke, exhale the breath", "Beyond the life, beyond the death", "NOBODY! NOBODY!", "[Virtuoso Guitar Climax - Synyster Gates]"]}, {"id": 9, "title": "M.I.A.", "album": "City of Evil (2005)", "lines": ["[Acoustic guitar battlefront intro]", "Staring at the carnage, praying in the sun", "Wondering what went wrong with everyone", "A young soldier lies down in the dust", "Broken rifle, memories turning to rust", "Watching the tide roll in from the sea", "Wondering if anyone remembers me", "I WALK ALONG THE PERIMETER WALL", "Waiting for the night to fall", "Can you hear the sound of the drums?", "Waiting for the salvation that never comes", "M.I.A.! LOST IN THE SMOKE!", "Pray for the fallen, pray for the dead", "A million thoughts running through my head", "[Acoustic outro]", "No one's coming home tonight..."]}, {"id": 10, "title": "Bat Country", "album": "City of Evil (2005)", "lines": ["HE WHO MAKES A BEAST OUT OF HIMSELF", "GETS RID OF THE PAIN OF BEING A MAN!", "Caught here in a fiery blaze, won't lose my will to stay", "I tried to drive the demons away, they're taking over me", "Two tickets to paradise, that's what the doctor prescribed", "Take a trip with me tonight, oh, won't you take my hand?", "Can't you help me as I'm startin' to burn? (All alone)", "Too many doses and I'm startin' to get an attraction", "My confidence is leaving me on my own (All alone)", "No one can save me and you know I don't want the attention!", "SO SORRY YOU'RE NOT HERE, I'VE BEEN WAITING FOR YOU!", "There's something in the air that smells like death tonight", "Fallin' down, never gonna hold me back!", "Can't you help me as I'm startin' to burn? (All alone)", "Too many doses and I'm startin' to get an attraction", "My confidence is leaving me on my own (All alone)", "No one can save me and you know I don't want the attention!", "[Dual Guitar Harmony Solo]", "CAN'T YOU HELP ME AS I'M STARTIN' TO BURN?!"]}, {"id": 11, "title": "Unholy Confessions", "album": "Waking the Fallen (2003)", "lines": ["[Drop D Opening Riff]", "I'll try, she said as she walked away", "Try not to lose you", "Two vibrant colors turned to gray", "Try not to lose you", "I'm not insane, I'm not insane", "I'm not insane, I'm not... not insane", "(Mother...)", "Come back to me, it's almost easy", "(Said it all)", "Come back to me, it's almost easy!", "Nothing hurts more than being all alone", "Scared of the dark, looking for home", "GIVE ME YOUR HAND, TAKE MY BREATH AWAY!", "No more breath inside, no more tears to cry", "Leave it all behind tonight!"]}, {"id": 12, "title": "So Far Away", "album": "Nightmare (2010)", "lines": ["[Acoustic guitar tribute to The Rev]", "Never feared for anything, never chained but never free", "A reason to live, the cold feeling of loneliness", "I love you, you were ready, the pain is strong and urges rise", "How do I live without the ones I loved?", "Time still turns the pages of the book it's burned", "Place and time always on my mind", "I have so much to say but you're so far away!", "Plans of what our futures hold, foolish lies of growing old", "It seems we're so invincible, the truth is so cold", "A final song, a last request, a perfect chapter laid to rest", "Now and then I try to find a place in my mind", "Where you can stay, can you stay away?", "I have so much to say but you're so far away!", "Sleep tight, I'm not afraid", "The ones that we love are here with me", "Forgive me, I'm never gonna forget you!", "[Synyster Gates Guitar Solo]", "SO FAR AWAY! SO FAR AWAY!"]}, {"id": 13, "title": "Dear God", "album": "Avenged Sevenfold (2007)", "lines": ["A lonely road, crossed another cold state line", "Miles away from those I have loved, purpose hard to find", "While I recall all the words you spoke to me", "Can't help but wish that I was there", "Back where I'd love to be, oh yeah", "Dear God, the only thing I ask of You", "Is to hold her when I'm not around", "When I'm much too far away", "We all need that person who can be true to you", "I left her when I found her", "And now I wish I'd stayed", "'Cause I'm lonely and I'm tired", "I'm missing you again once again, OH ONCE AGAIN!", "There's nowhere to run and nowhere to go", "I gave up on trying to fight the distance", "I need you now, more than ever", "A lonely feeling cuts right through my soul", "Dear God, the only thing I ask of You", "Is to hold her when I'm not around", "When I'm much too far away", "We all need that person who can be true to you", "I left her when I found her", "And now I wish I'd stayed", "'Cause I'm lonely and I'm tired", "I'm missing you again once again, OH ONCE AGAIN!", "[Synyster Gates Outro Guitar Solo]", "Some search, never finding a way", "Before long, they waste away", "I found you, something told me to stay", "I gave in, to selfish ways", "And how I miss someone to hold", "When hope begins to fade...", "Dear God, the only thing I ask of You", "Is to hold her when I'm not around", "When I'm much too far away", "We all need that person who can be true to you", "I left her when I found her", "And now I wish I'd stayed", "'Cause I'm lonely and I'm tired", "I'm missing you again once again, OH ONCE AGAIN!"]}, {"id": 14, "title": "A Little Piece of Heaven", "album": "Avenged Sevenfold (2007)", "lines": ["Before the story begins, is it such a sin", "For me to take what's mine, until the end of time?", "We were more than friends, before the story ends", "And I will take what's mine, create what God would never design", "MUST HAVE STABBED HER FIFTY FUCKING TIMES!", "I can't believe it", "Ripped her heart out right before her eyes", "Eyes over easy, eat it, eat it, eat it!", "'Cause I really always knew that my little crime", "Would be cold that's why I got a heater for your thighs", "And I know, I know it's not your time", "But bye, bye", "And a word to the wise when the fire dies", "You think it's over but it's just begun", "Baby, don't cry!", "You had my heart, at least for the most part", "'Cause everybody's gotta die sometime", "We fell apart, let's make a new start", "'Cause everybody's gotta die sometime, yeah, e-yeah", "'Cause I really always knew that my little crime", "Would be cold that's why I got a heater for your thighs", "And I know, I know it's not your time", "But bye, bye", "And a word to the wise when the fire dies", "You think it's over but it's just begun", "Baby, don't cry!", "[Duet Outro with The Rev]", "NOW YOU'RE MINE FOREVER!"]}, {"id": 15, "title": "Cosmic", "album": "Life Is But a Dream… (2023)", "lines": ["[Sweeping cinematic synth buildup]", "Dancing in the wind, like a feather in the sky", "Watching the stars as they slowly pass us by", "There's no gravity holding us down anymore", "We have left the ground, we have left the shore", "Through the cosmic waves, across the infinite expanse", "Giving the universe one final dance", "I'LL LOVE YOU FOREVER, ACROSS ALL TIME AND SPACE!", "In every lifetime, in every single place", "No ending, no beginning, only the light", "Fading into the cosmic night...", "[Grand Guitar & Vocoder Climax]", "I LOVE YOU! I LOVE YOU ACROSS THE STARS!"]}, {"id": 16, "title": "Game Over", "album": "Life Is But a Dream… (2023)", "lines": ["[Intro: Classical Guitar Solo]", "Stripped of all that we need", "Tossed into the river, into the sea", "We can find our way back, but do we want to be?", "Look at the flowers, look at the trees", "Cradle of life, the birds and the bees", "Tell me a story, put me to sleep", "Nothing to lose, nothing to keep", "Take me to the edge and push me off", "I'm on a wire, wire, wire", "Here I go, into the fire, fire, fire", "It's a game, game, game", "And it's over, over, over", "[Speed Metal Explosion]", "Can't you see the man in the mirror is gone?", "He traded his eyes for the rising sun", "GAME OVER! GAME OVER!"]}, {"id": 17, "title": "Mattel", "album": "Life Is But a Dream… (2023)", "lines": ["Sitting on the front lawn", "Waiting for the day to dawn", "Everything is painted gray", "Fake grass and a fake sun rays", "Plastic flowers never die", "Painted smiles on a plastic sky", "LIVING IN A MATTEL WORLD!", "Living in a dollhouse made of cardboard dreams", "Nothing is as pretty as it always seems", "Tell me who you want me to be", "Dress me up in your fantasy", "BURN IT DOWN! BURN IT DOWN!", "Hello, plastic world, goodbye!"]}, {"id": 18, "title": "Gunslinger", "album": "Avenged Sevenfold (2007)", "lines": ["[Acoustic slide opening]", "Yeah, it's been awhile since I have seen the sunshine", "Since I have seen your smiling face", "I've been in the dark, fighting in this war", "Missing everything we made", "The letters that you sent, I keep them right inside my chest", "To remind me why I'm fighting for the best", "I REACH TO THE SKY AND CALL OUT YOUR NAME!", "And if I won't see you that means I have died", "Cause I've always been a gunslinger on the run", "With a heart that only beats for one", "With a bullet in my gun, I will make it home to you", "Always been a gunslinger on the run!"]}];
+
+let currentTrackIdx = 0;
+let currentLineIdx = 0;
+let isPlaying = false;
+let playInterval = null;
+const SPEEDS = [2.5, 3.5, 5.0];
+let speedIdx = 1;
+
+function renderHome(items) {
+  const container = document.getElementById('homeList');
+  if (items.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px;font-size:0.9rem;">Lagu tidak ditemukan</div>';
+    return;
+  }
+  container.innerHTML = items.map((s) => `
+    <div class="song-card" onclick="openTrack(${s.id - 1})">
+      <div class="song-num">${s.id}</div>
+      <div class="song-meta-wrap">
+        <div class="song-card-title">${s.title}</div>
+        <div class="song-card-album">${s.album}</div>
+      </div>
+      <svg class="chevron-right" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </div>
+  `).join('');
+}
+
+function filterHome() {
+  const q = document.getElementById('homeSearch').value.toLowerCase();
+  const filtered = SETLIST_2026.filter(s => s.title.toLowerCase().includes(q) || s.album.toLowerCase().includes(q));
+  renderHome(filtered);
+}
+
+function openTrack(idx) {
+  currentTrackIdx = idx;
+  currentLineIdx = 0;
+  stopPlay();
+
+  const song = SETLIST_2026[idx];
+  document.getElementById('playerTitle').innerText = song.title;
+  document.getElementById('playerAlbum').innerText = song.album;
+  
+  document.getElementById('btnPrev').disabled = idx === 0;
+  document.getElementById('btnNext').disabled = idx === SETLIST_2026.length - 1;
+
+  const viewport = document.getElementById('playerViewport');
+  viewport.innerHTML = song.lines.map((line, lIdx) => {
+    const isInst = line.startsWith('[');
+    return `<div class="lyric-line ${isInst ? 'inst' : ''}" id="line-${lIdx}" onclick="selectLine(${lIdx})">${line}</div>`;
+  }).join('');
+
+  document.getElementById('viewHome').classList.remove('active');
+  document.getElementById('viewLyrics').classList.add('active');
+  window.scrollTo(0, 0);
+
+  selectLine(0, false);
+}
+
+function goToHome() {
+  stopPlay();
+  document.getElementById('viewLyrics').classList.remove('active');
+  document.getElementById('viewHome').classList.add('active');
+}
+
+function selectLine(lIdx, smooth = true) {
+  currentLineIdx = lIdx;
+  document.querySelectorAll('.lyric-line').forEach((el, i) => {
+    if (i === lIdx) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+
+  const activeEl = document.getElementById(`line-${lIdx}`);
+  if (activeEl) {
+    activeEl.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
+  }
+}
+
+function togglePlay() {
+  if (isPlaying) stopPlay();
+  else startPlay();
+}
+
+function startPlay() {
+  isPlaying = true;
+  document.getElementById('playIcon').outerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="playIcon"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+  playInterval = setInterval(() => {
+    const song = SETLIST_2026[currentTrackIdx];
+    if (currentLineIdx < song.lines.length - 1) {
+      selectLine(currentLineIdx + 1, true);
+    } else {
+      if (currentTrackIdx < SETLIST_2026.length - 1) {
+        openTrack(currentTrackIdx + 1);
+        startPlay();
+      } else {
+        stopPlay();
+      }
+    }
+  }, SPEEDS[speedIdx] * 1000);
+}
+
+function stopPlay() {
+  isPlaying = false;
+  clearInterval(playInterval);
+  playInterval = null;
+  const icon = document.getElementById('playIcon');
+  if (icon) {
+    icon.outerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="playIcon"><polygon points="6 4 20 12 6 20 6 4"/></svg>`;
+  }
+}
+
+function prevTrack() {
+  if (currentTrackIdx > 0) openTrack(currentTrackIdx - 1);
+}
+
+function nextTrack() {
+  if (currentTrackIdx < SETLIST_2026.length - 1) openTrack(currentTrackIdx + 1);
+}
+
+function cycleSpeed() {
+  speedIdx = (speedIdx + 1) % SPEEDS.length;
+  document.getElementById('btnSpeed').innerText = `Speed: ${SPEEDS[speedIdx]}s`;
+  if (isPlaying) {
+    stopPlay();
+    startPlay();
+  }
+}
+
+// PWA Service Worker & Install Prompt
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('btnInstallApp');
+  if (btn) btn.style.display = 'inline-flex';
+});
+
+function promptInstall() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      document.getElementById('btnInstallApp').style.display = 'none';
+    });
+  } else {
+    alert("Untuk install: tap menu titik tiga di Chrome lalu pilih 'Install app' atau 'Tambahkan ke Layar Utama'.");
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+
+renderHome(SETLIST_2026);
+</script>
+</body>
+</html>
