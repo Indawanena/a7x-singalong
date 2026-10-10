@@ -1,4 +1,4 @@
-const CACHE_NAME = 'a7x-2026-v4';
+const CACHE_NAME = 'a7x-2026-v5';
 const ASSETS = [
   './',
   './index.html',
